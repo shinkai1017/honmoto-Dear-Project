@@ -86,13 +86,14 @@
     }
   </style>
 </head>
-<body>
+<body data-date="YYYY-MM-DD">                                                     <!-- ←➋ここにも今日の日付 -->
+  </header>
   <header>
-    <h1>MM月DD日(D)</h1　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　<!-- ←➋ここにも今日の日付(タイトル) -->
+    <h1>MM月DD日(D)</h1　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　<!-- ←➌ここにも今日の日付(タイトル) -->
   </header>
 
 
-  <div class="photo-gallery">                                                      <!-- ←➌画像の日付とレイアウト -->
+  <div class="photo-gallery">                                                      <!-- ←➍画像の日付とレイアウト -->
   <!-- 1段目（横並び2枚） -->
   <div class="row">
     <img src="../images/YYYY-MM-DD-A.jpg">
@@ -100,11 +101,12 @@
 </div>
 
   
-  <main>　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　<!-- ←➍ここに本文を -->
+  <main>　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　<!-- ←➎ここに本文を -->
 
   </main>
 
   <footer>
+    <div id="nav-links"></div>
     <p><a href="../index.html">カレンダーへ戻る</a></p>
   </footer>
   <script>
@@ -135,5 +137,32 @@
       });
     });
   </script>
+  <script>
+  const currentDate = document.body.dataset.date;
+
+  // 前後の日付を計算
+  const date = new Date(currentDate);
+  const prevDate = new Date(date);
+  prevDate.setDate(prevDate.getDate() - 1);
+
+  const nextDate = new Date(date);
+  nextDate.setDate(nextDate.getDate() + 1);
+
+  function format(d) {
+    const y = d.getFullYear();
+    const m = ("0" + (d.getMonth() + 1)).slice(-2);
+    const day = ("0" + d.getDate()).slice(-2);
+    return `${y}-${m}-${day}.html`;
+  }
+
+  const nav = document.getElementById("nav-links");
+
+  nav.innerHTML = `
+    <p>
+      <a href="${format(prevDate)}">← 前の日記</a>　
+      <a href="${format(nextDate)}">次の日記 →</a>
+    </p>
+  `;
+</script>
 </body>
 </html>
